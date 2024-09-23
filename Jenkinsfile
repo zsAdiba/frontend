@@ -8,7 +8,7 @@ pipeline {
   environment {
     APP_NAME = 'frontend'
     IMAGE_NAME = 'frontend-image' // Replace with your Docker Hub username or appropriate image name
-    GITHUB_REPO='https://github.com/saiful-anuar/frontend-uat'
+    GITHUB_REPO='https://github.com/zsAdiba/frontend'
   }
 
   stages {
