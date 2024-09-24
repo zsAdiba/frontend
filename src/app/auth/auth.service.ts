@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { inject, Injectable } from '@angular/core';
 export class AuthService {
 
   httpClient = inject(HttpClient);
-  baseUrl = ''; // TODO add backend connection
+  baseUrl = environment.BACKEND_URL; // TODO add backend connection
   
   constructor() { }
  
@@ -17,4 +18,7 @@ export class AuthService {
 
   // TODO login logout isloggedin
   
+  login = (data: any) => {
+    return this.httpClient.post(`${this.baseUrl}/login`, data)
+  }
 }
