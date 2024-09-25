@@ -8,17 +8,18 @@ import { environment } from '../../environments/environment';
 export class AuthService {
 
   httpClient = inject(HttpClient);
-  baseUrl = environment.BACKEND_URL; // TODO add backend connection
+  loginUrl = environment.BACKEND_LOGIN_URL; // TODO add backend connection
+  registerUrl = environment.BACKEND_REGISTER_URL;
   
   constructor() { }
  
   signup = (data: any) => {
-    return this.httpClient.post(`${this.baseUrl}/register`, data);
+    return this.httpClient.post(`${this.registerUrl}/register`, data);
   }
 
   // TODO login logout isloggedin
   
   login = (data: any) => {
-    return this.httpClient.post(`${this.baseUrl}/login`, data)
+    return this.httpClient.post(`${this.loginUrl}/login`, data)
   }
 }

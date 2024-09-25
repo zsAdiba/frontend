@@ -14,19 +14,17 @@ export class RegisterComponent {
   router = inject(Router);
   authService = inject(AuthService);
   public registerForm = new FormGroup({
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
     username: new FormControl('', [Validators.required]),
-    employeecode: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email])
   })
 
 
   onSubmit = () => {
     if (this.registerForm.valid) {
-      console.log('register data', this.registerForm.value)
+      // console.log('register data', this.registerForm.value)
       this.authService.signup(this.registerForm.value).subscribe({
-        next: (data) => {
+        next: () => {
           this.router.navigate(['/login']);
         },
         error: (err) => console.log(err)
