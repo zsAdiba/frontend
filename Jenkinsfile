@@ -50,7 +50,7 @@ pipeline {
     }
     stage("DEPLOY & ACTIVATE") {
       steps {
-        echo 'Starting deployment and activation...'
+        /*echo 'Starting deployment and activation...'
         sh '''
         if [ "$(docker ps -q -f name=${APP_NAME})" ]; then
             echo "Stopping existing container ${APP_NAME}..."
@@ -59,11 +59,27 @@ pipeline {
             docker rm ${APP_NAME}
         fi
         '''
-        // Above doesnt seem to be working, need to check
+        // Above doesnt seem to be working, need to check*/
+        //echo 'Starting deployment and activation...'
+
+        script {
+          // Check if the container is created
+          def containerId = sh(script: "docker ps -a -q -f name=${APP_NAME}", returnStdout: true).trim()
+
+          if (containerId) {
+            echo "Stopping existing container ${APP_NAME}..."
+            sh "docker stop ${APP_NAME}"
+        
+            echo "Removing existing container ${APP_NAME}..."
+            sh "docker rm ${APP_NAME}"
+          } else {
+            echo "No existing container named ${APP_NAME} found."
+          }
+        }
 
         // Run the new container
         echo "Deploying new container ${APP_NAME}..."
-        sh 'docker run -d --name ${APP_NAME} -p 4202:4200 ${IMAGE_NAME}'
+        sh 'docker run --restart always -d --name ${APP_NAME} -p 4202:4200 ${IMAGE_NAME}'
       }
     }
   }
