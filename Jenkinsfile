@@ -78,7 +78,7 @@ pipeline {
         }
 
         // Run the new container
-        echo "Deploying new container ${APP_NAME}..."
+        echo "Deploying a new container ${APP_NAME}..."
         sh 'docker run --restart always -d --name ${APP_NAME} -p 3000:4200 ${IMAGE_NAME}'
       }
     }
