@@ -21,7 +21,7 @@ pipeline {
     }
 
 
-    stage('INSTALL PACKAGES') {
+    stage('Install Packages') {
       steps {
         // Install the dependencies
         echo "installing dependencies..."
@@ -29,38 +29,28 @@ pipeline {
         sh "npm i -g @angular/cli"
       }
     }
-    stage('TEST') {
+    stage('Performing test') {
       steps {
         echo "running test..."
-        //sh 'npm test --watch=false'  //failed at headless chrome
+        sh 'ng test --watch=false --browsers=ChromeHeadless'  //failed at headless chrome
       }
     }
-    stage('BUILD APP') {
+    stage('Build app') {
       steps {
         echo "building app..."
         sh 'ng build --configuration production'
       }
     }
-    stage("BUILD DOCKER") {
+    stage("Build Docker") {
       steps {
         script {
           sh 'docker build -t ${IMAGE_NAME} .'
         }
       }
     }
-    stage("DEPLOY & ACTIVATE") {
+    stage("Deploy & Activate") {
       steps {
-        /*echo 'Starting deployment and activation...'
-        sh '''
-        if [ "$(docker ps -q -f name=${APP_NAME})" ]; then
-            echo "Stopping existing container ${APP_NAME}..."
-            docker stop ${APP_NAME}
-            echo "Removing existing container ${APP_NAME}..."
-            docker rm ${APP_NAME}
-        fi
-        '''
-        // Above doesnt seem to be working, need to check*/
-        //echo 'Starting deployment and activation...'
+        echo 'Starting deployment and activation...'
 
         script {
           // Check if the container is created
