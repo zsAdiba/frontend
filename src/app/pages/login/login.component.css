@@ -66,3 +66,13 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.link-button {
+    background: none;
+    border: none;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0; /* Removes extra padding */
+    font: inherit; /* Inherit font styles */
+}
